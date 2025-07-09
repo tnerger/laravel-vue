@@ -7,28 +7,42 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
+            refresh: ['resources/views/**', 'resources/js/**/*.vue', 'app/**/*.php'],
         }),
         vue({
             template: {
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false,
-                    // This is necessary to handle Vue components correctly
-                    // when using Vite with Laravel.
-                    // It ensures that asset URLs are transformed correctly
-                    // in Vue single-file components.
                 },
             },
+            script: {
+                defineModel: true,
+                propsDestructure: true
+            }
         }),
         tailwindcss(),
     ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
+    optimizeDeps: {
+        include: ['@inertiajs/vue3']
+    },
     server: {
         host: '0.0.0.0',
         port: 5173,
         cors: true,
         hmr: {
-            host: 'localhost'
+            host: 'localhost',
+            port: 5173,
+        },
+        watch: {
+            usePolling: true,
+            interval: 500,
+            ignored: ['**/node_modules/**', '**/vendor/**']
         }
     },
 });
