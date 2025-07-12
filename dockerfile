@@ -1,9 +1,9 @@
 # Datei: Dockerfile
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Installiere Composer und notwendige PHP-Erweiterungen
-RUN apt-get update && apt-get install -y unzip zip git \
-    && docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y unzip zip git libicu-dev\
+    && docker-php-ext-install pdo pdo_mysql intl
 
 # bcmath installieren
 RUN docker-php-ext-install bcmath
