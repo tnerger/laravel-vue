@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
+import forms from '@tailwindcss/forms';
 import path from 'path';
 
 export default defineConfig({
@@ -22,7 +23,23 @@ export default defineConfig({
                 propsDestructure: true
             }
         }),
-        tailwindcss(),
+        tailwindcss(
+            { config: {
+                content: [
+                    './resources/views/**/*.blade.php',
+                    './resources/js/**/*.vue',
+                    './resources/js/**/*.js',
+                    './storage/framework/views/*.php',
+                ],
+                theme: {
+                    extend: {},
+                },
+                plugins: [
+                    forms,
+                ],
+            }
+        }
+        ),
     ],
     resolve: {
         alias: {

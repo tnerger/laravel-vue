@@ -92,20 +92,4 @@ const create = () => form.post(route('listing.store'));
 </script>
 
 <style scoped>
-label {
-    margin-right: 2em;
-}
-
-div {
-    padding: 2px
-}
-
-input,
-button {
-    border: 1px solid slategray;
-}
-
-button {
-    background: slategray
-}
 </style>
