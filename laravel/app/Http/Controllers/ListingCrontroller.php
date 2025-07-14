@@ -25,7 +25,7 @@ class ListingCrontroller extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Listing/Create');
     }
 
     /**
@@ -33,7 +33,20 @@ class ListingCrontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vData = $request->validate([
+            "beds" => "required|integer|min:1|max:255",
+            "baths" => "required|integer|min:1|max:255",
+            "area" => "required|integer|min:1|max:10000",
+            "city" => "required|string",
+            "code" => "required|string",
+            "street" => "required|string",
+            "street_nr" => "required|string",
+            "price" => "required|integer|min:1|max:10000000",
+
+        ]);
+        Listing::create($vData);
+        return redirect()->route('listing.index')
+            ->with('success', 'Listing was created!');
     }
 
     /**
@@ -41,7 +54,7 @@ class ListingCrontroller extends Controller
      */
     public function show(Listing $listing)
     {
-         return inertia(
+        return inertia(
             'Listing/Show',
             [
                 'listing' => $listing
