@@ -1,9 +1,9 @@
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div class="gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <Box v-for="listing in listings" :key="listing.id">
             <div>
                 <Link :href="route('listing.show', listing)">
-                   <Price :price="listing.price" class="text-2xl font-bold" />
+                <Price :price="listing.price" class="font-bold text-2xl" />
                 <ListingSpace :listing class="text-lg"></ListingSpace>
                 <ListingAddress :listing class="text-gray-500"></ListingAddress>
                 </Link>

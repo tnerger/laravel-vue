@@ -1,23 +1,23 @@
 <template>
-    <header class="border-b border-gray-200 bg-white dark:border-b-gray-700 dark:bg-gray-800 w-full">
-        <div class="container mx-auto">
-            <nav class="flex p-4 items-center justify-between">
-                <div class="text-lg font-medium">
+    <header class="bg-white dark:bg-gray-800 border-gray-200 border-b dark:border-b-gray-700 w-full">
+        <div class="mx-auto container">
+            <nav class="flex justify-between items-center p-4">
+                <div class="font-medium text-lg">
                     <Link :href="route('listing.index')">Listings</Link>
                 </div>
-                <div class="text-xl text-red-700 font-bold text-center">
+                <div class="font-bold text-red-700 text-xl text-center">
                     <Link :href="route('listing.index')">HotPlaces</Link>
                 </div>
                 <div>
                     <Link :href="route('listing.create')"
-                        class="bg-red-700 hover:bg-red-800 text-slate-900 font-medium p-2 rounded-md">+ New Listing
+                        class="btn-primary">+ New Listing
                     </Link>
                 </div>
             </nav>
         </div>
     </header>
-    <main class="container mx-auto p-4">
-        <div v-if="flashSuccess" class="mb-4 border rounded-md shadow-sm border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900 p-2">
+    <main class="mx-auto p-4 container">
+        <div v-if="flashSuccess" class="bg-green-50 dark:bg-green-900 shadow-sm mb-4 p-2 border border-green-200 dark:border-green-800 rounded-md">
             {{ flashSuccess }}
         </div>
         <slot></slot>
@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 const props = defineProps({ message: String })
 // page.props.value.falsh.success = VERALTET!
 // page.props.falsh.success = Neu, OHNE value in Vue 3
