@@ -1,7 +1,7 @@
 <template>
     <nav class="flex space-x-2 mb-4 px-2.5">
-        <Link href="/">Index</Link>
-        <Link href="/hello">Show</Link>
+        <Link :href="route('listing.index')">Listings</Link>
+        <Link :href="route('listing.create')">New Listing</Link>
     </nav>
     <!-- <div>The page with time {{ timer }}</div> -->
     <div v-if="flashSuccess" class="success">

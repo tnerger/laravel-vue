@@ -5,8 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Styles / Scripts -->
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-            @inertiaHead
+        @routes
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @inertiaHead
 
     </head>
     <body >

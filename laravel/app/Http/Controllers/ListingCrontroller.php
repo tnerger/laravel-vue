@@ -65,24 +65,45 @@ class ListingCrontroller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Listing $listing)
     {
-        //
+        return inertia(
+            'Listing/Edit',
+            [
+                'listing' => $listing
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Listing $listing)
     {
-        //
+        $vData = $request->validate([
+            "beds" => "required|integer|min:1|max:255",
+            "baths" => "required|integer|min:1|max:255",
+            "area" => "required|integer|min:1|max:10000",
+            "city" => "required|string",
+            "code" => "required|string",
+            "street" => "required|string",
+            "street_nr" => "required|string",
+            "price" => "required|integer|min:1|max:10000000",
+
+        ]);
+        $listing->update($vData);
+        return redirect()->route('listing.show', $listing)
+            ->with('success', 'Listing was updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
+
+        return redirect()->route('listing.index')
+            ->with('success','Listing was deleted');
     }
 }
