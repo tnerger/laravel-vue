@@ -1,8 +1,9 @@
 <template>
-    {{ listing.street }}
-    {{ listing.street_nr }}
-    {{ listing.city }},
-    for ${{ listing.price }}
+    <div>
+        {{ listing.street }}
+        {{ listing.street_nr }}
+        {{ listing.city }}
+    </div>
 </template>
 
 <script setup>
