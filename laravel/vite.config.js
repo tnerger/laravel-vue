@@ -1,15 +1,15 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+import forms from '@tailwindcss/forms';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
-import forms from '@tailwindcss/forms';
+import laravel from 'laravel-vite-plugin';
 import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: ['resources/views/**', 'resources/js/**/*.vue', 'resources/js/app.js', 'app/**/*.php'],
+            refresh: ['resources/views/**', 'resources/js/**/*.vue', 'resources/js/**/*.js', 'app/**/*.php'],
         }),
         vue({
             template: {

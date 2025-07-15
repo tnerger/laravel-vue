@@ -5,8 +5,9 @@
                 <div class="font-medium text-lg">
                     <Link :href="route('listing.index')">Listings</Link>
                 </div>
-                <div class="font-bold text-red-700 text-xl text-center">
+                <div class="relative font-bold text-red-700 text-xl text-center">
                     <Link :href="route('listing.index')">HotPlaces</Link>
+                    <figure class="top-0 -right-5.5 absolute opacity-45 rotate-25">🔥</figure>
                 </div>
                 <div>
                     <Link :href="route('listing.create')"

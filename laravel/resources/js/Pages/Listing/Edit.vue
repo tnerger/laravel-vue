@@ -66,7 +66,7 @@
             </div>
 
             <div class="col-span-6">
-                <button class="btn-primary" type="submit">Create</button>
+                <button class="btn-primary" type="submit">Edit</button>
             </div>
         </div>
     </form>
