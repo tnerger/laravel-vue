@@ -9,15 +9,22 @@
                     <Link :href="route('listing.index')">HotPlaces</Link>
                     <figure class="top-0 -right-5.5 absolute opacity-45 rotate-25">🔥</figure>
                 </div>
-                <div>
+                <div class="flex items-center gap-4" v-if="user">
+                    <div class="text-gray-500 text-sm">{{ user.name }}</div>
                     <Link :href="route('listing.create')"
                         class="btn-primary">+ New Listing
                     </Link>
+                    <div>
+                        <Link :href="route('logout')" method="delete">Logout</Link>
+                    </div>
+                </div>
+                <div v-else>
+                    <Link :href="route('login')">Sign-In</Link>
                 </div>
             </nav>
         </div>
     </header>
-    <main class="mx-auto p-4 container">
+    <main class="mx-auto p-4 w-full container">
         <div v-if="flashSuccess" class="bg-green-50 dark:bg-green-900 shadow-sm mb-4 p-2 border border-green-200 dark:border-green-800 rounded-md">
             {{ flashSuccess }}
         </div>
@@ -34,4 +41,5 @@ const props = defineProps({ message: String })
 // page.props.falsh.success = Neu, OHNE value in Vue 3
 const page = usePage();
 const flashSuccess = computed(() => page.props.flash?.success);
+const user = computed(() => page.props.user);
 </script>
