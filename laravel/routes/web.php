@@ -2,15 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\ListingCrontroller;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
-
-
-Route::resource('listing', ListingCrontroller::class)->only(['index', 'show']);
 
 Route::get('login', [AuthController::class, 'create'])
     ->name('login');
@@ -20,12 +17,17 @@ Route::post('login', [AuthController::class, 'store'])
 
 Route::resource('user-account', UserAccountController::class)->only('create', 'store');
 
-
+// Geschützte Listing-Routen (CREATE muss vor SHOW stehen!)
 Route::middleware('auth')->group(function () {
     Route::get('/hello', [IndexController::class, 'show']);
-    Route::resource('listing', ListingCrontroller::class)->only(['update', 'store', 'create', 'destroy', 'edit']);
+
+    Route::resource('listing', ListingController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+
     Route::delete('logout', [AuthController::class, 'destroy'])
         // CSRF beim Logout rausnehmen
         ->withoutMiddleware([VerifyCsrfToken::class])
         ->name('logout');
 });
+
+// Öffentliche Listing-Routen (INDEX und SHOW kommen NACH den geschützten Routen)
+Route::resource('listing', ListingController::class)->only(['index', 'show']);

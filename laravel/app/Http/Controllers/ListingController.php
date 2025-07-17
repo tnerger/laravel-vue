@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
-class ListingCrontroller extends Controller
+class ListingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        Gate::authorize('viewAny', Listing::class);
         return inertia(
             'Listing/Index',
             [
@@ -25,6 +27,7 @@ class ListingCrontroller extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Listing::class);
         return inertia('Listing/Create');
     }
 
@@ -33,6 +36,8 @@ class ListingCrontroller extends Controller
      */
     public function store(Request $request)
     {
+
+        Gate::authorize('create', Listing::class);
         $vData = $request->validate([
             "beds" => "required|integer|min:1|max:255",
             "baths" => "required|integer|min:1|max:255",
@@ -44,7 +49,8 @@ class ListingCrontroller extends Controller
             "price" => "required|integer|min:1|max:10000000",
 
         ]);
-        Listing::create($vData);
+        $request->user()->listings()->create($vData);
+        // Listing::create([...$vData, 'user_id' => $request->user()->id]);
         return redirect()->route('listing.index')
             ->with('success', 'Listing was created!');
     }
@@ -54,6 +60,7 @@ class ListingCrontroller extends Controller
      */
     public function show(Listing $listing)
     {
+        Gate::authorize('view', $listing);
         return inertia(
             'Listing/Show',
             [
@@ -67,6 +74,7 @@ class ListingCrontroller extends Controller
      */
     public function edit(Listing $listing)
     {
+        Gate::authorize('update', $listing);
         return inertia(
             'Listing/Edit',
             [
@@ -80,6 +88,7 @@ class ListingCrontroller extends Controller
      */
     public function update(Request $request, Listing $listing)
     {
+        Gate::authorize('update', $listing);
         $vData = $request->validate([
             "beds" => "required|integer|min:1|max:255",
             "baths" => "required|integer|min:1|max:255",
@@ -101,9 +110,9 @@ class ListingCrontroller extends Controller
      */
     public function destroy(Listing $listing)
     {
+        Gate::authorize('delete', $listing);
         $listing->delete();
-
         return redirect()->route('listing.index')
-            ->with('success','Listing was deleted');
+            ->with('success', 'Listing was deleted');
     }
 }
