@@ -11,13 +11,28 @@ class ListingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Listing::class);
+
+        $filters = $request->only([
+            'priceFrom',
+            'priceTo',
+            'beds',
+            'baths',
+            'areaFrom',
+            'areaTo',
+        ]);
+
+        $query = Listing::mostRecent()->filter($filters);
+
+
+
         return inertia(
             'Listing/Index',
             [
-                'listings' => Listing::orderByDesc('created_at')->paginate(10)
+                'filters' => $filters,
+                'listings' => $query->paginate(10)->withQueryString()
             ]
         );
     }

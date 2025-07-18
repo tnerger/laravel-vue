@@ -12,12 +12,6 @@
 }
 
 /* Tailwind Forms Fake: */
-input {
-    border: 1px solid grey;
-    width: 100%;
-    box-sizing: border-box;
-    background: white;
-}
 
 label {
     display: block;
@@ -39,6 +33,10 @@ label {
 
     .btn-primary {
         @apply bg-red-700 hover:bg-red-800 p-2 rounded-md font-medium text-slate-900;
+    }
+
+    .btn-normal {
+        @apply bg-gray-500 hover:bg-gray-600 p-2 rounded-md font-medium text-gray-200;
     }
 
     /* Weil das CSS im Kurs leider überhaupt nicht greift, dann so: */
@@ -63,4 +61,17 @@ label {
         @apply bg-red-700 border-2 dark:border-gray-800 rounded-full w-5 h-5;
     }
     /* Ende Range Slider */
+
+    .input-filter-l,
+    .input-filter-r {
+        @apply dark:bg-gray-800 px-2 py-1 border border-gray-200 dark:border-gray-700 rounded-md h-9 font-medium text-gray-600 dark:placeholder:text-gray-600 dark:text-gray-400 placeholder:text-gray-400 text-sm;
+    }
+
+    .input-filter-l {
+        @apply border-r-0 rounded-r-none;
+    }
+
+    .input-filter-r {
+        @apply rounded-l-none;
+    }
 }
