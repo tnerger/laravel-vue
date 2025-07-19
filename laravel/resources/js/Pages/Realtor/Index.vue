@@ -15,8 +15,10 @@
                     <ListingAddress :listing="listing" class="text-gray-500"></ListingAddress>
                 </div>
                 <div class="flex items-center gap-1 text-gray-600 dark:text-gray-300">
-                    <Link class="btn-outline font-medium text-xs"> Preview </Link>
-                    <Link class="btn-outline font-medium text-xs"> Edit </Link>
+                    <a target="_blank" class="btn-outline font-medium text-xs" :href="route('listing.show', listing)"> Preview
+                    </a>
+                    <Link class="btn-outline font-medium text-xs" :href="route('realtor.listing.edit', listing)"> Edit
+                    </Link>
                     <Link class="btn-outline font-medium text-xs" v-if="listing.deleted_at === null" method="DELETE"
                         :href="route('realtor.listing.destroy', [listing.id])">
                     Delete </Link>

@@ -22,8 +22,6 @@ Route::resource('user-account', UserAccountController::class)->only('create', 's
 Route::middleware('auth')->group(function () {
     Route::get('/hello', [IndexController::class, 'show']);
 
-    Route::resource('listing', ListingController::class)->only(['create', 'store', 'edit', 'update']);
-
     Route::delete('logout', [AuthController::class, 'destroy'])
         // CSRF beim Logout rausnehmen
         ->withoutMiddleware([VerifyCsrfToken::class])

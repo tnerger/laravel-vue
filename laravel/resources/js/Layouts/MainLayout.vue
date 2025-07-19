@@ -11,7 +11,7 @@
                 </div>
                 <div class="flex items-center gap-4" v-if="user">
                     <Link :href="route('realtor.listing.index')" class="text-gray-500 text-sm">{{ user.name }}</Link>
-                    <Link :href="route('listing.create')"
+                    <Link :href="route('realtor.listing.create')"
                         class="btn-primary">+ New Listing
                     </Link>
                     <div>
