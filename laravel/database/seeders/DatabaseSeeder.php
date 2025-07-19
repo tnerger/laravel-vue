@@ -16,15 +16,19 @@ class DatabaseSeeder extends Seeder
     {
         $users = User::factory(40)->create();
 
-        User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'test@example.com',
             'is_admin' => true
         ]);
         for ($i = 0; $i <= 20; $i++) {
-
             Listing::factory()->create([
                 'user_id' => $users->random()->id
+            ]);
+        }
+        for ($i = 0; $i <= 20; $i++) {
+            Listing::factory()->create([
+                'user_id' => $admin->id
             ]);
         }
     }

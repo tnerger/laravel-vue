@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::resource('user-account', UserAccountController::class)->only('create', 's
 Route::middleware('auth')->group(function () {
     Route::get('/hello', [IndexController::class, 'show']);
 
-    Route::resource('listing', ListingController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('listing', ListingController::class)->only(['create', 'store', 'edit', 'update']);
 
     Route::delete('logout', [AuthController::class, 'destroy'])
         // CSRF beim Logout rausnehmen
@@ -31,3 +32,10 @@ Route::middleware('auth')->group(function () {
 
 // Öffentliche Listing-Routen (INDEX und SHOW kommen NACH den geschützten Routen)
 Route::resource('listing', ListingController::class)->only(['index', 'show']);
+
+Route::prefix('realtor')
+    ->name('realtor.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::resource('listing', RealtorListingController::class);
+    });

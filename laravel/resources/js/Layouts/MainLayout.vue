@@ -10,7 +10,7 @@
                     <figure class="top-0 -right-5.5 absolute opacity-45 rotate-25">🔥</figure>
                 </div>
                 <div class="flex items-center gap-4" v-if="user">
-                    <div class="text-gray-500 text-sm">{{ user.name }}</div>
+                    <Link :href="route('realtor.listing.index')" class="text-gray-500 text-sm">{{ user.name }}</Link>
                     <Link :href="route('listing.create')"
                         class="btn-primary">+ New Listing
                     </Link>
