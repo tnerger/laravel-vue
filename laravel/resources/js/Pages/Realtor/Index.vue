@@ -5,9 +5,10 @@
     </section>
 
     <section class="gap-2 grid grid-cols-1 lg:grid-cols-2">
-        <Box v-for="listing in listings.data" :key="listing.id">
+        <Box v-for="listing in listings.data" :key="listing.id"
+            :class="{ 'border-dashed dark:border-red-900 border-red-900': listing.deleted_at }">
             <div class="flex md:flex-row flex-col justify-between md:items-center gap-2">
-                <div>
+                <div :class="{ 'opacity-25': listing.deleted_at }">
                     <div class="xl:flex items-center gap-2">
                         <Price :price="listing.price" class="font-medium text-2xl"></Price>
                         <ListingSpace :listing="listing"></ListingSpace>
@@ -15,13 +16,16 @@
                     <ListingAddress :listing="listing" class="text-gray-500"></ListingAddress>
                 </div>
                 <div class="flex items-center gap-1 text-gray-600 dark:text-gray-300">
-                    <a target="_blank" class="btn-outline font-medium text-xs" :href="route('listing.show', listing)"> Preview
+                    <a target="_blank" class="btn-outline font-medium text-xs" :href="route('listing.show', listing)">
+                        Preview
                     </a>
                     <Link class="btn-outline font-medium text-xs" :href="route('realtor.listing.edit', listing)"> Edit
                     </Link>
-                    <Link class="btn-outline font-medium text-xs" v-if="listing.deleted_at === null" method="DELETE"
+                    <Link class="btn-outline font-medium text-xs" v-if="!listing.deleted_at" method="DELETE"
                         :href="route('realtor.listing.destroy', [listing.id])">
                     Delete </Link>
+                    <Link v-else class="btn-outline font-medium text-xs"
+                        :href="route('realtor.listing.restore', listing)" method="PUT">Restore</Link>
                 </div>
             </div>
         </Box>
