@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Models\ListingImage;
 use App\Models\ListingImageSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -42,5 +43,14 @@ class RealtorListingImageController extends Controller
             }
         }
         return redirect()->back()->with('success', 'Images Uploaded');
+    }
+
+    public function destroy($listing, ListingImage $image)
+    {
+        foreach ($image->sizes as $size) {
+            Storage::disk('public')->delete($size->filename);
+        }
+        $image->delete();
+        return redirect()->back()->with('success', 'Images deleted!');
     }
 }

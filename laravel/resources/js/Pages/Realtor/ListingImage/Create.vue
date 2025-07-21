@@ -18,14 +18,19 @@
     <Box class="mt-4" v-if="listing?.images?.length">
         <template #header>Current Listing Images</template>
         <div class="gap-4 grid grid-cols-3 mt-4">
-            <div v-for="image in listing.images" :key="image.id">
+            <div v-for="image in listing.images" :key="image.id" class="flex flex-col justify-between">
                 <img :src="image.sizes[0].src" class="rounded-md" alt="">
+                <Link class="mt-2 btn-outline text-xs" :href="route('realtor.listing.image.destroy', [listing, image])"
+                    method="DELETE">
+                Delete Image
+                </Link>
             </div>
         </div>
     </Box>
 </template>
 
 <script setup>
+import { Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import Box from '@/Components/UI/Box.vue';
 import { useForm } from '@inertiajs/vue3';
