@@ -19,7 +19,7 @@
         <template #header>Current Listing Images</template>
         <div class="gap-4 grid grid-cols-3 mt-4">
             <div v-for="image in listing.images" :key="image.id">
-                <img :src="image.src" class="rounded-md" alt="">
+                <img :src="image.sizes[0].src" class="rounded-md" alt="">
             </div>
         </div>
     </Box>

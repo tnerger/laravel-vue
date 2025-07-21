@@ -12,6 +12,12 @@ RUN docker-php-ext-install bcmath
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-install pgsql pdo_pgsql
 
+# install GD
+# Für die GD-Bibliothek benötigen wir libpng-dev, libjpeg-dev und libweb
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libwebp-dev \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
+    && docker-php-ext-install gd
+RUN echo "upload_max_filesize=20M\npost_max_size=20M" > /usr/local/etc/php/conf.d/uploads.ini
 # Composer hinzufügen
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
