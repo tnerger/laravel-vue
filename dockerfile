@@ -15,8 +15,10 @@ RUN apt-get install -y libpq-dev \
 # Composer hinzufügen
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+
 WORKDIR /app
 
 COPY . /app
 # COPY ./laravel-kurs/storage ./app/laravel-kurs/storage
 # COPY ./laravel-kurs/vendor ./app/laravel-kurs/vendor
+# RUN cd laravel && composer install
