@@ -32,7 +32,7 @@ class ListingController extends Controller
             'Listing/Index',
             [
                 'filters' => $filters,
-                'listings' => $query->paginate(10)->withQueryString()
+                'listings' => $query->with('images')->paginate(10)->withQueryString()
             ]
         );
     }
@@ -44,6 +44,9 @@ class ListingController extends Controller
     public function show(Listing $listing)
     {
         Gate::authorize('view', $listing);
+
+        $listing->load('images');
+
         return inertia(
             'Listing/Show',
             [

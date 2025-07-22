@@ -14,10 +14,16 @@ class RealtorListingController extends Controller
         $sort = $request->only(['by', 'order']);
         // dd($sort);
         return inertia('Realtor/Index', [
-            'listings' => $request->user()->listings()->when(
-                ($filter['deleted'] ?? false)  === 'true',
-                fn($query) => $query->withTrashed()
-            )->sort($sort)->paginate(10)->withQueryString(),
+            'listings' => $request->user()
+                ->listings()
+                ->when(
+                    ($filter['deleted'] ?? false)  === 'true',
+                    fn($query) => $query->withTrashed()
+                )
+                ->sort($sort)
+                ->withCount('images')
+                ->paginate(10)
+                ->withQueryString(),
             'filter' => $filter,
             'sort' => $sort
         ]);

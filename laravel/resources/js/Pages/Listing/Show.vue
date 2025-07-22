@@ -4,7 +4,11 @@
         sm <=> md die PLätze tauschen. Iwie besser, als wie im Kurs den
         Container von Grid zu Flex wechseln zu lassen    -->
         <Box class="flex items-center col-span-12 md:col-span-7 md:row-start-1">
-            <div class="w-full font-medium text-gray-500 text-center">No Images</div>
+            <div class="gap-2 grid grid-cols-2" v-if="listing.images.length">
+
+                <img v-for="image in listing.images" :key="image.id" :src="image.sizes?.find((im) => im.size == 'small')?.src" :alt=" listing.id + ' - ' + image.id ">
+            </div>
+            <div v-else class="w-full font-medium text-gray-500 text-center">No Images</div>
         </Box>
         <div class="flex flex-col gap-4 col-span-12 md:col-span-5 row-start-1">
             <Box>
@@ -36,17 +40,23 @@
                 <div class="mt-2 text-gray-500">
                     <div class="flex justify-between">
                         <div>Total paid</div>
-                        <div> <Price :price="totalPaid" class="font-medium" /> </div>
+                        <div>
+                            <Price :price="totalPaid" class="font-medium" />
+                        </div>
                     </div>
 
                     <div class="flex justify-between">
                         <div>Principal paid</div>
-                        <div> <Price :price="listing.price" class="font-medium" /> </div>
+                        <div>
+                            <Price :price="listing.price" class="font-medium" />
+                        </div>
                     </div>
 
                     <div class="flex justify-between">
                         <div>Total Interest</div>
-                        <div> <Price :price="totalInterest" class="font-medium" /> </div>
+                        <div>
+                            <Price :price="totalInterest" class="font-medium" />
+                        </div>
                     </div>
 
                 </div>

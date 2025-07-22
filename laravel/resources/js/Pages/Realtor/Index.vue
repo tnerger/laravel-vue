@@ -32,7 +32,7 @@
                     </div>
                     <div class="mt-2">
                         <Link class="block btn-outline w-full font-medium text-xs text-center" :href="route('realtor.listing.image.create', { listing })">
-                            Edit Images
+                            Edit Images <span v-if="listing.images_count">({{ listing.images_count }})</span>
                         </Link>
                     </div>
                 </section>

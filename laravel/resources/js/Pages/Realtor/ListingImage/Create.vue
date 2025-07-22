@@ -12,6 +12,9 @@
                 <button class="btn-outline" :disabled="canNotUpload">Upload</button>
                 <button type="reset" @click="reset" class="btn-outline">Reset</button>
             </section>
+            <div v-if="imageErros.length" class="input-error">
+                <div v-for="(error, index) in imageErros" :key="index">{{ error }}</div>
+            </div>
         </form>
     </Box>
 
@@ -45,6 +48,22 @@ router.on('progress', (event) => {
 const form = useForm({
     images: []
 });
+const imageErros = computed(() =>
+    Object.entries(form.errors)
+    // mit reduce ein Array draus machen
+        .reduce((carry, [i, value]) => {
+            // , dass nur die Image-Errors enthält
+            if (i.indexOf('images.') !== -1) {
+                carry.push(
+                    // Zur Lesbarkaeit für den Nutzer das Feld von image.0 field zu Image 1 umbennen, sonst weiß keiner was los ist.
+                    value.replace(/images\.([\d]+)(\sfield)?/gi, (completeExpression, imageIndex) => {
+                        return 'image ' + (Number.parseInt(imageIndex) + 1)
+                    })
+                )
+            }
+            return carry;
+        }, [])
+)
 const canNotUpload = computed(() => form.images.length ? false : true);
 const upload = () => {
     form.post(
