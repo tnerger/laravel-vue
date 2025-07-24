@@ -30,15 +30,17 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns([
-            'beds',
-            'baths',
-            'area',
-            'city',
-            'code',
-            'street',
-            'street_nr',
-            'price'
-        ]);
+        Schema::table('listings', function (Blueprint $table) {
+            $table->dropColumn([
+                'beds',
+                'baths',
+                'area',
+                'city',
+                'code',
+                'street',
+                'street_nr',
+                'price'
+            ]);
+        });
     }
 };
