@@ -61,11 +61,13 @@
 
                 </div>
             </Box>
+            <MakeOffer :listing-id="listing.id" :price="listing.price"></MakeOffer>
         </div>
     </div>
 </template>
 
 <script setup>
+import MakeOffer from '@/Pages/Listing/Show/Components/MakeOffer.vue';
 import ListingAddress from '@/Components/ListingAddress.vue';
 import ListingSpace from '@/Components/ListingSpace.vue';
 import Price from '@/Components/Price.vue';

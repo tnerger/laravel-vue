@@ -52,14 +52,21 @@ class User extends Authenticatable
     // verändert das Attribut name aus der DB
     // und gibt bei holen die Value immer mit führenden Großbuchtsaben an.
     // bei einem Attribut, wie user_name (DB Feld name), hieße die Funktion userName
-    protected function name(): Attribute {
+    protected function name(): Attribute
+    {
         return Attribute::make(
-            get:fn ($value) => ucfirst($value)
+            get: fn($value) => ucfirst($value)
             // set ...
         );
     }
 
-    public function listings(): HasMany {
+    public function listings(): HasMany
+    {
         return $this->hasMany(Listing::class);
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
     }
 }

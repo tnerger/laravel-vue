@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ListingOfferController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
 use App\Http\Controllers\UserAccountController;
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
         ->withoutMiddleware([VerifyCsrfToken::class])
         ->name('logout');
 });
+
+Route::resource('listing.offer', ListingOfferController::class)
+    ->middleware('auth')
+    ->only('store');
 
 // Öffentliche Listing-Routen (INDEX und SHOW kommen NACH den geschützten Routen)
 Route::resource('listing', ListingController::class)->only(['index', 'show']);
