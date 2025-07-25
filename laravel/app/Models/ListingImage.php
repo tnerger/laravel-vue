@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ListingImage extends Model
 {
-    protected $fillable = ['filename'];
+    use HasFactory;
+
+    // protected $fillable = ['filename'];
 
     protected $with = ['sizes']; // Die Größen sollen immer mitgeladen werden, das man das Bidl sonst eh nicht verwenden kann
     public $file_sizes = [

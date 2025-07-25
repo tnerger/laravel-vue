@@ -2,7 +2,9 @@
     <Box>
         <Link :href="route('listing.show', listing)" class="grid grid-cols-6">
         <div class="flex justify-center items-center col-span-2 p-2 pl-0">
-            <img v-if="listing.images.length" class="rounded-md max-h-30" :src="listing.images[0].sizes[0].src" alt="">
+            <div v-if="listing.images.length" class="rounded-md w-30 h-30 overflow-hidden">
+                <img class="w-full h-full object-center object-cover" :src="listing.images[0].sizes[0].src" alt="">
+            </div>
             <NoImage v-else class="fill-gray-400 w-10 h-10" />
         </div>
         <div class="col-span-4">

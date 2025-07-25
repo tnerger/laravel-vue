@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ListingImageSize extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = ['listing_image_id', 'size', 'filename'];
     protected $appends = ['src'];
 
