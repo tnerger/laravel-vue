@@ -5,10 +5,9 @@
         Container von Grid zu Flex wechseln zu lassen    -->
         <Box class="flex items-center col-span-12 md:col-span-7 md:row-start-1">
             <div class="gap-2 columns-2 sm:columns-3 lg:columns-2 xl:columns-3 w-full" v-if="listing.images.length">
-                <div class="mb-2 rounded-lg overflow-hidden break-inside-avoid" v-for="image in listing.images" :key="image.id">
-                    <img
-                        :src="image.sizes?.find((im) => im.size == 'small')?.src"
-                        :alt="listing.id + ' - ' + image.id"
+                <div class="mb-2 rounded-lg overflow-hidden break-inside-avoid" v-for="image in listing.images"
+                    :key="image.id">
+                    <img :src="image.sizes?.find((im) => im.size == 'small')?.src" :alt="listing.id + ' - ' + image.id"
                         class="w-full h-auto object-cover">
                 </div>
             </div>
@@ -65,7 +64,12 @@
 
                 </div>
             </Box>
-            <MakeOffer :listing-id="listing.id" :price="listing.price"></MakeOffer>
+            <MakeOffer
+            v-if="user?.id"
+            :listing-id="listing.id"
+            :price="listing.price"
+            @offer-updated="offer = $event"
+            />
         </div>
     </div>
 </template>
@@ -77,10 +81,13 @@ import ListingSpace from '@/Components/ListingSpace.vue';
 import Price from '@/Components/Price.vue';
 import Box from '@/Components/UI/Box.vue';
 import { useMonthlyPayment } from '@/Composables/useMonthlyPayment';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+const props = defineProps({ listing: Object })
 const interstRate = ref(2.5);
 const duration = ref(25);
-const props = defineProps({ listing: Object })
-const { monthlyPayment, totalInterest, totalPaid } = useMonthlyPayment(props.listing.price, interstRate, duration);
-
+const offer = ref(props.listing.price);
+const { monthlyPayment, totalInterest, totalPaid } = useMonthlyPayment(offer, interstRate, duration);
+const page = usePage();
+const user = computed(() => page.props.user);
 </script>

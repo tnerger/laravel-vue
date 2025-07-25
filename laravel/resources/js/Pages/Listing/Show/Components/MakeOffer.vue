@@ -15,7 +15,7 @@
         <div class="flex justify-between mt-2 text-gray-500">
             <div>Differnce</div>
             <div>
-                <Price :price="form.amount - props.price"></Price>
+                <Price :price="differnce"></Price>
             </div>
         </div>
     </Box>
@@ -25,7 +25,8 @@
 import Box from '@/Components/UI/Box.vue';
 import Price from '@/Components/Price.vue';
 import { useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
+import { debounce } from 'lodash';
 
 const props = defineProps({
     listingId: Number,
@@ -44,4 +45,10 @@ const makeOffer = () => form.post(
 )
 
 const differnce = computed(() => form.amount - props.price);
+
+const emit = defineEmits(['offerUpdated'])
+
+watch(
+    () => form.amount, debounce((value) => emit('offerUpdated', value), 200)
+    )
 </script>
