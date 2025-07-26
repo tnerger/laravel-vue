@@ -1,0 +1,8 @@
+#!/bin/bash
+docker compose exec app php "$@"
+# This script executes the given command inside the Docker container named 'app'.
+# Because nobody wants to type 'docker compose exec app php' all the time.
+# use sudo chmod +x ./dphp to make it executable.
+# mv to /usr/local/bin/dphp to make it available globally.
+# Example usage: dphp artisan migrate
+# This will run the 'php artisan migrate' command inside the 'app' container.
