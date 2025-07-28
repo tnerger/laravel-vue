@@ -45,6 +45,18 @@ class Listing extends Model
         );
     }
 
+    public function scopeNotSold(Builder $query): Builder
+    {
+        return $query
+            ->whereNull('sold_at');
+            // ->doesntHave('offers')
+            // ->orWhereHas(
+            //     'offers',
+            //     fn(Builder $query) => $query->whereNull('accepted_at')->whereNull('rejected_at')
+            // );
+    }
+
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query

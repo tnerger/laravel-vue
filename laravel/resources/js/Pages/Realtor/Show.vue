@@ -10,7 +10,8 @@
             </div>
         </Box>
         <div v-else class="flex flex-wrap items-start col-span-12 md:col-span-7 md:row-start-1">
-            <Offer class="mb-4 w-full" v-for="offer in listing.offers" :listing-price="listing.price" :listing="listing" :offer="offer" :key="offer.id" />
+            <Offer class="mb-4 w-full" v-for="offer in listing.offers" :listing-price="listing.price" :listing="listing"
+                :offer="offer" :key="offer.id" :is-sold="listing.sold_at !== null" />
         </div>
         <Box class="flex flex-col gap-4 col-span-12 md:col-span-5 row-start-1">
             <template #header>Basic Info</template>

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Listing;
 use App\Models\Offer;
+use App\Policies\ListingPolicy;
 use App\Policies\OfferPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Offer::class => OfferPolicy::class,
+        Listing::class => ListingPolicy::class,
     ];
 
     /**

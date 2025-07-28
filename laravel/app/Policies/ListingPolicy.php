@@ -9,9 +9,15 @@ use Illuminate\Auth\Access\Response;
 class ListingPolicy
 {
 
-    public function before(?User $user, $ability){
-        // Damit ein Admin am Ende alles bearbeiten, löschen kann.
-        return $user?->is_admin;
+    public function before(?User $user, $ability)
+    {
+        // Grant full access to admins, let other users go through normal policy checks
+        if ($user?->is_admin) {
+            return true;
+        }
+
+        // Return null to continue with normal policy methods for non-admin users
+        return null;
     }
 
     /**
@@ -27,7 +33,11 @@ class ListingPolicy
      */
     public function view(?User $user, Listing $listing): bool
     {
-        return true;
+        if ($listing->user_id === $user?->id) {
+            return true;
+        }
+
+        return $listing->sold_at === null;
     }
 
     /**
@@ -43,7 +53,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing): bool
     {
-        return $user->id === $listing->user_id;
+        return $listing->sold_at === null && ($user->id === $listing->user_id);
     }
 
     /**

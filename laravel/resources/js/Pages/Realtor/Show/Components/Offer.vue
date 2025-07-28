@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div>
-                <Link v-if="offer.accepted_at === null && offer.rejected_at === null" :href="route('realtor.offer.accept',offer)" class="btn-outline font-medium text-xs" method="put" as="button">Accept</Link>
+                <Link v-if="!isSold" :href="route('realtor.offer.accept',offer)" class="btn-outline font-medium text-xs" method="put" as="button">Accept</Link>
             </div>
 
         </section>
@@ -28,6 +28,7 @@ import { Link } from '@inertiajs/vue3';
 import Price from '@/Components/Price.vue';
 import { computed } from 'vue';
 
-const props = defineProps({ offer: Object, listingPrice: Number });
+const props = defineProps({ offer: Object, listingPrice: Number, isSold: Boolean });
 const difference = computed(() => props.offer.amount - props.listingPrice)
+
 </script>

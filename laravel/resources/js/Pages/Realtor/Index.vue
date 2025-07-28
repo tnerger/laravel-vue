@@ -9,6 +9,7 @@
             :class="{ 'border-dashed dark:border-red-900 border-red-900': listing.deleted_at }">
             <div class="flex md:flex-row flex-col justify-between md:items-center gap-2">
                 <div :class="{ 'opacity-25': listing.deleted_at }">
+                    <div v-if="listing.sold_at !== null" class="inline-block mb-2 p-1 border border-green-300 dark:border-green-900 border-dashed rounded-md font-bold text-green-500 dark:text-green-900 text-xs uppercase">Sold</div>
                     <div class="xl:flex items-center gap-2">
                         <Price :price="listing.price" class="font-medium text-2xl"></Price>
                         <ListingSpace :listing="listing"></ListingSpace>
