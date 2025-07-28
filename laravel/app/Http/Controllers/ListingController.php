@@ -42,16 +42,19 @@ class ListingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Listing $listing)
+    public function show(Request $request, Listing $listing)
     {
         Gate::authorize('view', $listing);
 
         $listing->load('images');
 
+        $offer = $request->user() ? $listing->offers()->byActiveUser()->first() : null;
+
         return inertia(
             'Listing/Show',
             [
-                'listing' => $listing
+                'listing' => $listing,
+                'offerMade' => $offer
             ]
         );
     }

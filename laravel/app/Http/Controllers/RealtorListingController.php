@@ -22,11 +22,17 @@ class RealtorListingController extends Controller
                 )
                 ->sort($sort)
                 ->withCount('images')
+                ->withCount('offers')
                 ->paginate(10)
                 ->withQueryString(),
             'filter' => $filter,
             'sort' => $sort
         ]);
+    }
+
+    public function  show(Listing $listing)
+    {
+        return inertia('Realtor/Show', ['listing' => $listing->load('offers', 'offers.user')]);
     }
 
     /**
