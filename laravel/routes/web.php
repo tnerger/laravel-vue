@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ListingOfferController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RealtorListingAcceptOfferController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
@@ -34,6 +35,17 @@ Route::middleware('auth')->group(function () {
 Route::resource('listing.offer', ListingOfferController::class)
     ->middleware('auth')
     ->only('store');
+
+Route::resource('notification', NotificationController::class)
+    ->middleware('auth')
+    ->only(['index']);
+
+Route::name('notification.read')
+    ->middleware('auth')
+    ->put(
+        'notification/{notification}/read',
+        [NotificationController::class, 'read']
+    );
 
 // Öffentliche Listing-Routen (INDEX und SHOW kommen NACH den geschützten Routen)
 Route::resource('listing', ListingController::class)->only(['index', 'show']);

@@ -1,10 +1,10 @@
 <template>
     <h1 class="mb-4 text-3xl">Your Listings</h1>
-    <section>
+    <section v-if="listings.data.length">
         <RealtorFilters :filter="filter" :sort="sort"></RealtorFilters>
     </section>
 
-    <section class="gap-2 grid grid-cols-1 lg:grid-cols-2">
+    <section v-if="listings.data.length" class="gap-2 grid grid-cols-1 lg:grid-cols-2">
         <Box v-for="listing in listings.data" :key="listing.id"
             :class="{ 'border-dashed dark:border-red-900 border-red-900': listing.deleted_at }">
             <div class="flex md:flex-row flex-col justify-between md:items-center gap-2">
@@ -44,14 +44,17 @@
                 </section>
             </div>
         </Box>
-
     </section>
-    <section v-if="listings.links" class="flex justify-center mt-4 mb-4 w-full">
+    <EmptyState v-else>You have no Listings, yet.</EmptyState>
+
+
+    <section v-if="listings.total > listings.per_page" class="flex justify-center mt-4 mb-4 w-full">
         <Pagination :links="listings.links"></Pagination>
     </section>
 </template>
 
 <script setup>
+import EmptyState from '@/Components/UI/EmptyState.vue';
 import ListingAddress from '@/Components/ListingAddress.vue';
 import ListingSpace from '@/Components/ListingSpace.vue';
 import Price from '@/Components/Price.vue';

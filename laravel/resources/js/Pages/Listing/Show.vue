@@ -3,16 +3,17 @@
         <!-- md:row-start-1 ist dazu gedacht, dass die beiden Boxen vom wechsel
         sm <=> md die PLätze tauschen. Iwie besser, als wie im Kurs den
         Container von Grid zu Flex wechseln zu lassen    -->
-        <Box class="flex items-center col-span-12 md:col-span-7 md:row-start-1">
-            <div class="gap-2 columns-2 sm:columns-3 lg:columns-2 xl:columns-3 w-full" v-if="listing.images.length">
+
+        <Box v-if="listing.images.length" class="flex items-center col-span-12 md:col-span-7 md:row-start-1">
+            <div class="gap-2 columns-2 sm:columns-3 lg:columns-2 xl:columns-3 w-full">
                 <div class="mb-2 rounded-lg overflow-hidden break-inside-avoid" v-for="image in listing.images"
                     :key="image.id">
                     <img :src="image.sizes?.find((im) => im.size == 'small')?.src" :alt="listing.id + ' - ' + image.id"
                         class="w-full h-auto object-cover">
                 </div>
             </div>
-            <div v-else class="w-full font-medium text-gray-500 text-center">No Images</div>
         </Box>
+        <EmptyState v-else class="flex items-center col-span-12 md:col-span-7 md:row-start-1">No Images</EmptyState>
         <div class="flex flex-col gap-4 col-span-12 md:col-span-5 row-start-1">
             <Box>
                 <template #header>
@@ -73,6 +74,7 @@
 </template>
 
 <script setup>
+import EmptyState from '@/Components/UI/EmptyState.vue';
 import OfferMade from '@/Pages/Listing/Show/Components/OfferMade.vue';
 import MakeOffer from '@/Pages/Listing/Show/Components/MakeOffer.vue';
 import ListingAddress from '@/Components/ListingAddress.vue';

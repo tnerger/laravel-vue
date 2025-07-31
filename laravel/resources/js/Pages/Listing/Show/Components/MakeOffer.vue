@@ -6,7 +6,7 @@
                 <input v-model.number="form.amount" class="input" type="text">
                 <input v-model.number="form.amount" id="duration" class="mt-2 input-range" type="range" :min="Number.parseInt(price / 2)"
                     :max="price * 2" :step="Number.parseInt((price * 2 - price / 2) / 100)">
-                <button stype="submit" class="mt-2 w-full text-sm btn-otline">Make an Offer</button>
+                <button stype="submit" class="mt-2 btn-outline w-full text-sm">Make an Offer</button>
                 <div class="input-error" v-if="form.errors.amount">
                     {{ form.errors.amount }}
                 </div>

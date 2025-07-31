@@ -15,7 +15,7 @@ class Listing extends Model
     protected $fillable = ['beds', 'city', 'baths', 'area', 'code', 'street', 'street_nr', 'price'];
     protected $sortable = ['price', 'created_at'];
 
-    public function owner(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
