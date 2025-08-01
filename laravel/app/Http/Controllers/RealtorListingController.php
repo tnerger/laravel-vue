@@ -32,6 +32,7 @@ class RealtorListingController extends Controller
 
     public function  show(Listing $listing)
     {
+        Gate::authorize('viewRealtor', $listing);
         return inertia('Realtor/Show', ['listing' => $listing->load('offers', 'offers.user')]);
     }
 

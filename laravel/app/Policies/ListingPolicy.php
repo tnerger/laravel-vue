@@ -56,6 +56,15 @@ class ListingPolicy
         return $listing->sold_at === null && ($user->id === $listing->user_id);
     }
 
+
+    /**
+     * Determine wether the user can see Listing in Reator-View
+     */
+    public function viewRealtor(User $user, Listing $listing): bool
+    {
+        return ($user->id === $listing->user_id);
+    }
+
     /**
      * Determine whether the user can delete the model.
      */
