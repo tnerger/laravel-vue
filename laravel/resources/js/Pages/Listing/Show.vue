@@ -8,8 +8,10 @@
             <div class="gap-2 columns-2 sm:columns-3 lg:columns-2 xl:columns-3 w-full">
                 <div class="mb-2 rounded-lg overflow-hidden break-inside-avoid" v-for="image in listing.images"
                     :key="image.id">
-                    <img :src="image.sizes?.find((im) => im.size == 'small')?.src" :alt="listing.id + ' - ' + image.id"
-                        class="w-full h-auto object-cover">
+                    <img :src="image.sizes?.find((im) => im.size == 'small')?.src"
+                         @click="openZoom(image)"
+                         :alt="listing.id + ' - ' + image.id"
+                         class="hover:opacity-90 w-full h-auto object-cover transition-opacity cursor-pointer">
                 </div>
             </div>
         </Box>
@@ -70,6 +72,13 @@
                 @offer-updated="offer = $event" />
 
         </div>
+        <!-- Zoom Modal -->
+        <ImageZoom
+            :image="selectedImage"
+            :images="listing.images"
+            :is-open="showZoom"
+            @close="closeZoom"
+        />
     </div>
 </template>
 
@@ -91,4 +100,19 @@ const offer = ref(props.listing.price);
 const { monthlyPayment, totalInterest, totalPaid } = useMonthlyPayment(offer, interstRate, duration);
 const page = usePage();
 const user = computed(() => page.props.user);
+
+/*Zoom Functions*/
+import ImageZoom from '@/Pages/Listing/Show/Components/ImageZoom.vue';
+const selectedImage = ref(null);
+const showZoom = ref(false);
+
+const openZoom = (image) => {
+    selectedImage.value = image;
+    showZoom.value = true;
+};
+
+const closeZoom = () => {
+    showZoom.value = false;
+    selectedImage.value = null;
+};
 </script>
