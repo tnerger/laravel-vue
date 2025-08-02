@@ -11,12 +11,7 @@ class IndexController extends Controller
 
         // dd(Auth::user());
 
-        return inertia(
-            'Index/Index',
-            [
-                'message' => 'Hello from Laravel!'
-            ]
-        );
+        return redirect()->route('listing.index');
     }
 
     public function show() {

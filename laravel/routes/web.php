@@ -9,8 +9,34 @@ use App\Http\Controllers\RealtorListingAcceptOfferController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
 use App\Http\Controllers\UserAccountController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/email/verify', function () {
+    return inertia('Auth/VerifyEmail');
+})
+    ->middleware('auth')
+    ->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+
+    $request->fulfill();
+
+    return redirect()
+        ->route('listing.index')
+        ->with('success', 'Email verified! Welcome!');
+})
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('success', 'Verification link sent!');
+})
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
 
 Route::get('/', [IndexController::class, 'index']);
 
@@ -24,7 +50,6 @@ Route::resource('user-account', UserAccountController::class)->only('create', 's
 
 // Geschützte Listing-Routen (CREATE muss vor SHOW stehen!)
 Route::middleware('auth')->group(function () {
-    Route::get('/hello', [IndexController::class, 'show']);
 
     Route::delete('logout', [AuthController::class, 'destroy'])
         // CSRF beim Logout rausnehmen
@@ -52,7 +77,7 @@ Route::resource('listing', ListingController::class)->only(['index', 'show']);
 
 Route::prefix('realtor')
     ->name('realtor.')
-    ->middleware('auth')
+    ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::resource('listing.image', RealtorListingImageController::class)->withoutMiddleware([VerifyCsrfToken::class])->only(['store', 'create', 'destroy']);
         Route::resource('listing', RealtorListingController::class)->withTrashed();
