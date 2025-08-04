@@ -7,7 +7,7 @@
                     <figure class="top-0 -right-5.5 absolute opacity-45 rotate-25">🔥</figure>
                 </div>
                 <div class="flex items-center gap-4" v-if="user">
-                    <Link :href="route('notification.index')" class="relative py-2 pr-2">
+                    <Link :href="route('notification.index')" class="relative py-2">
                     <Bell/>
                     <div v-if="notificationCount"
                         class="top-0 right-0 absolute bg-red-700 dark:bg-red-400 border border-white dark:border-gray-900 rounded-full w-5 h-5 font-medium text-white text-xs text-center">

@@ -58,4 +58,23 @@ class RealtorListingImageController extends Controller
         $image->delete();
         return redirect()->back()->with('success', 'Images deleted!');
     }
+
+    public function update(Request $request, Listing $listing, ListingImage $image)
+    {
+        $request->validate([
+            'sort' => 'required|integer',
+            'is_cover' => 'boolean'
+        ]);
+
+        if ($request->input('is_cover')) {
+            $listing->images()->update(['is_cover' => false]);
+        }
+
+        $image->update([
+            'sort' => $request->input('sort'),
+            'is_cover' => $request->input('is_cover', false)
+        ]);
+
+        return redirect()->back()->with('success', 'Image updated successfully!');
+    }
 }

@@ -33,7 +33,13 @@ class ListingController extends Controller
             'Listing/Index',
             [
                 'filters' => $filters,
-                'listings' => $query->notSold()->with('images')->paginate(10)->withQueryString()
+                'listings' => $query
+                    ->notSold()
+                    ->with(['images' => function ($query) {
+                        $query->where('is_cover', true);
+                    }])
+                    ->paginate(10)
+                    ->withQueryString()
             ]
         );
     }

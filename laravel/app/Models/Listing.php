@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Listing extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['beds', 'city', 'baths', 'area', 'code', 'street', 'street_nr', 'price'];
+    protected $fillable = ['title', 'description', 'beds', 'city', 'baths', 'area', 'code', 'street', 'street_nr', 'price'];
     protected $sortable = ['price', 'created_at'];
 
     public function user(): BelongsTo
@@ -22,7 +22,7 @@ class Listing extends Model
 
     public function images(): HasMany
     {
-        return $this->hasMany(ListingImage::class);
+        return $this->hasMany(ListingImage::class)->orderBy('sort');
     }
 
     public function offers(): HasMany
@@ -49,11 +49,11 @@ class Listing extends Model
     {
         return $query
             ->whereNull('sold_at');
-            // ->doesntHave('offers')
-            // ->orWhereHas(
-            //     'offers',
-            //     fn(Builder $query) => $query->whereNull('accepted_at')->whereNull('rejected_at')
-            // );
+        // ->doesntHave('offers')
+        // ->orWhereHas(
+        //     'offers',
+        //     fn(Builder $query) => $query->whereNull('accepted_at')->whereNull('rejected_at')
+        // );
     }
 
 

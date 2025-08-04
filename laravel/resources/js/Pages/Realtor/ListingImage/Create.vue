@@ -1,4 +1,5 @@
 <template>
+    <h1 class="mb-4 text-xl">Images for: {{ listing.title }}</h1>
     <Box>
         <template #header>
             <span v-if="uploadPercentage == 0">Upload new Images</span>
@@ -17,27 +18,17 @@
             </div>
         </form>
     </Box>
+    <ImageGalery :images="listing.images" :listing="listing" />
 
-    <Box class="mt-4" v-if="listing?.images?.length">
-        <template #header>Current Listing Images</template>
-        <div class="gap-4 grid grid-cols-3 mt-4">
-            <div v-for="image in listing.images" :key="image.id" class="flex flex-col justify-between">
-                <img :src="image.sizes[0].src" class="rounded-md" alt="">
-                <Link class="mt-2 btn-outline text-xs" :href="route('realtor.listing.image.destroy', [listing, image])"
-                    method="DELETE">
-                Delete Image
-                </Link>
-            </div>
-        </div>
-    </Box>
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import Box from '@/Components/UI/Box.vue';
 import { useForm } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
+import ImageGalery from './Components/ImageGalery.vue';
+
 
 const props = defineProps({ listing: Object });
 const uploadPercentage = ref(0);
@@ -50,7 +41,7 @@ const form = useForm({
 });
 const imageErros = computed(() =>
     Object.entries(form.errors)
-    // mit reduce ein Array draus machen
+        // mit reduce ein Array draus machen
         .reduce((carry, [i, value]) => {
             // , dass nur die Image-Errors enthält
             if (i.indexOf('images.') !== -1) {
@@ -81,4 +72,5 @@ const addFiles = (event) => {
 
 
 const reset = () => form.reset('images')
+
 </script>

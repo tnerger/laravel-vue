@@ -29,7 +29,10 @@ class ListingSeeder extends Seeder
             'user_id' => $user->id
         ]);
 
-        $image = $listing->images()->create();
+        $image = $listing->images()->create([
+            'sort' => 0,
+            'is_cover' => true, // Setze das erste Bild als Cover
+        ]);
         $filename = $examplePicturesHouses->random()['filename'];
 
         $this->addImageSizesToListingImage($image, $filename);
@@ -37,7 +40,9 @@ class ListingSeeder extends Seeder
         // 1 to 4 additional images from rooms
         $numberOfAdditionalImages = rand(1, 4);
         for ($j = 0; $j < $numberOfAdditionalImages; $j++) {
-            $additionalImage = $listing->images()->create();
+            $additionalImage = $listing->images()->create([
+                'sort' => $j + 1 // Sortierung beginnt bei 1 für zusätzliche Bilder
+            ]);
             $additionalFilename = $examplePicturesRooms->random()['filename'];
             $this->addImageSizesToListingImage($additionalImage, $additionalFilename);
         }

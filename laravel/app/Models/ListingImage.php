@@ -11,7 +11,7 @@ class ListingImage extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['filename'];
+    protected $fillable = ['sort', 'is_cover'];
 
     protected $with = ['sizes']; // Die Größen sollen immer mitgeladen werden, das man das Bidl sonst eh nicht verwenden kann
     public $file_sizes = [
