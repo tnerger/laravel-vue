@@ -17,8 +17,10 @@ class ListingFactory extends Factory
     public function definition(): array
     {
         return [
+            'title' => ucwords(fake()->words(2, true)) . ' ' . fake()->randomElement(['Apartments', 'Residences', 'Building', 'Condominiums', 'Hall', 'House']),
+            'description' => fake()->realText(rand(200, 1000)),
             'beds' => fake()->numberBetween(1, 7),
-            'baths' => fake()->numberBetween(1, 7),
+            'baths' => fake()->numberBetween(1, 4),
             'area' => fake()->numberBetween(30, 255),
             'city' => fake()->city(),
             'code' => fake()->postcode(),

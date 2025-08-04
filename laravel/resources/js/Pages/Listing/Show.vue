@@ -1,10 +1,11 @@
 <template>
-    <div class="gap-4 grid grid-cols-12">
+    <div class="items-start gap-4 grid grid-cols-12">
+        <h1 class="col-span-12 row-start-1 text-bold text-xl">{{ listing.title }}</h1>
         <!-- md:row-start-1 ist dazu gedacht, dass die beiden Boxen vom wechsel
         sm <=> md die PLätze tauschen. Iwie besser, als wie im Kurs den
         Container von Grid zu Flex wechseln zu lassen    -->
 
-        <Box v-if="listing.images.length" class="flex items-center col-span-12 md:col-span-7 md:row-start-1">
+        <Box v-if="listing.images.length" class="flex items-center col-span-12 md:col-span-7 md:row-start-2">
             <div class="gap-2 columns-2 sm:columns-3 lg:columns-2 xl:columns-3 w-full">
                 <div class="mb-2 rounded-lg overflow-hidden break-inside-avoid" v-for="image in listing.images"
                     :key="image.id">
@@ -15,8 +16,8 @@
                 </div>
             </div>
         </Box>
-        <EmptyState v-else class="flex items-center col-span-12 md:col-span-7 md:row-start-1">No Images</EmptyState>
-        <div class="flex flex-col gap-4 col-span-12 md:col-span-5 row-start-1">
+        <EmptyState v-else class="flex items-center col-span-12 md:col-span-7 md:row-start-2">No Images</EmptyState>
+        <div class="flex flex-col gap-4 col-span-12 md:col-span-5 row-start-2">
             <Box>
                 <template #header>
                     Basic Info
@@ -24,6 +25,9 @@
                 <Price :price="listing.price" class="font-bold text-2xl" />
                 <ListingSpace :listing class="text-lg"></ListingSpace>
                 <ListingAddress :listing class="text-gray-500"></ListingAddress>
+            </Box>
+            <Box>
+                {{ listing.description }}
             </Box>
             <Box>
                 <template #header>

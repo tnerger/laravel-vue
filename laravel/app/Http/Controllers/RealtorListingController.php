@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 
 class RealtorListingController extends Controller
 {
+
     public function index(Request $request)
     {
         $filter = $request->only(['deleted']);
@@ -30,7 +31,7 @@ class RealtorListingController extends Controller
         ]);
     }
 
-    public function  show(Listing $listing)
+    public function show(Listing $listing)
     {
         Gate::authorize('viewRealtor', $listing);
         return inertia('Realtor/Show', ['listing' => $listing->load('offers', 'offers.user')]);
@@ -68,6 +69,8 @@ class RealtorListingController extends Controller
     {
         Gate::authorize('update', $listing);
         $vData = $request->validate([
+            "title" => "required|string|max:255",
+            "description" => "required|string|max:1000",
             "beds" => "required|integer|min:1|max:255",
             "baths" => "required|integer|min:1|max:255",
             "area" => "required|integer|min:1|max:10000",
@@ -100,6 +103,8 @@ class RealtorListingController extends Controller
 
         Gate::authorize('create', Listing::class);
         $vData = $request->validate([
+            "title" => "required|string|max:255",
+            "description" => "required|string|max:1000",
             "beds" => "required|integer|min:1|max:255",
             "baths" => "required|integer|min:1|max:255",
             "area" => "required|integer|min:1|max:10000",
@@ -110,9 +115,8 @@ class RealtorListingController extends Controller
             "price" => "required|integer|min:1|max:10000000",
 
         ]);
-        $request->user()->listings()->create($vData);
-        // Listing::create([...$vData, 'user_id' => $request->user()->id]);
-        return redirect()->route('realtor.listing.index')
+        $listing = $request->user()->listings()->create($vData);
+        return redirect()->route('realtor.listing.image.create', ['listing' =>  $listing->id]) // Direkt zum Bild-Upload weiterleiten
             ->with('success', 'Listing was created!');
     }
 

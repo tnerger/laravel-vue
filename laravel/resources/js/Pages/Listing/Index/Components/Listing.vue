@@ -8,6 +8,9 @@
             <NoImage v-else class="fill-gray-400 w-10 h-10" />
         </div>
         <div class="col-span-4">
+            <div class="w-full">
+                {{ listing.title }}
+            </div>
             <div class="flex items-baseline gap-1">
                 <Price :price="listing.price" class="font-bold text-2xl" />
                 <div class="text-gray-500 text-xs">
