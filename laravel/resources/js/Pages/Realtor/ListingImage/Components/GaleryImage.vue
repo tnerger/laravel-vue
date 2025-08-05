@@ -7,11 +7,11 @@
         <div class="flex justify-between items-center">
             <button type="button" class="px-5 btn-outline" :disabled="0 === image.sort" @click="changeSort(-1)">
                 < </button>
-                    <div class="flex my-4">
-                        <label :for="'is_cover_' + image.id">
+                    <div class="flex my-4 overflow-hidden">
+                        <label :for="'is_cover_' + image.id" class="block p-2 px-5 btn-outline" :class="{ 'bg-red-900 text-white': image.is_cover }">
                             is cover
                         </label>
-                        <input :id="'is_cover_' + image.id" type="radio" name="is_cover" :value="1"
+                        <input :id="'is_cover_' + image.id" class="hidden absolute" type="radio" name="is_cover" :value="1"
                             v-model="form.is_cover" @change="updateImage">
                     </div>
                     <button type="button" class="px-5 btn-outline" :disabled="image.sort + 1 === listing.images.length"
