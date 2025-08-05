@@ -79,7 +79,12 @@ Route::prefix('realtor')
     ->name('realtor.')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-        Route::resource('listing.image', RealtorListingImageController::class)->withoutMiddleware([VerifyCsrfToken::class])->only(['store', 'create', 'destroy', 'update']);
+        Route::resource(
+            'listing.image',
+            RealtorListingImageController::class
+        )->withoutMiddleware([VerifyCsrfToken::class])->only(['store', 'create', 'destroy', 'update']);
+        Route::put('listing/{listing}/image/{image}/move', [RealtorListingImageController::class, 'move'])
+            ->name('listing.image.move');
         Route::resource('listing', RealtorListingController::class)->withTrashed();
         Route::put('listing/{listing}/restore', [RealtorListingController::class, 'restore'])
             ->withTrashed()

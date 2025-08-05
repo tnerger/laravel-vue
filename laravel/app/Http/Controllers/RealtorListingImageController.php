@@ -28,8 +28,14 @@ class RealtorListingImageController extends Controller
             ], [
                 'images.*:mimes' => "The file should be in on the formats: pg,png,jpeg,webp"
             ]);
+
+            $maxSort = $listing->images()->max('sort') ?? 0;
+
             foreach ($request->file('images') as $file) {
-                $baseImg = $listing->images()->create();
+                $baseImg = $listing->images()->create([
+                    'is_cover' => $maxSort === 0, // Set first image as cover
+                    'sort' => ++$maxSort,
+                ]);
                 $baseFilename = Str::uuid();
                 foreach ($baseImg->file_sizes as $fileSizeName => $fileSize) {
                     $image = Image::read($file)
@@ -76,5 +82,27 @@ class RealtorListingImageController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Image updated successfully!');
+    }
+
+    public function move(Request $request, Listing $listing, ListingImage $image)
+    {
+
+        $vData = $request->validate([
+            'direction' => 'required|integer|in:-1,1'
+        ]);
+
+        $currentSort = $image->sort;
+        $targetSort = $currentSort + $vData['direction'];
+
+        // Find the image with the target sort order
+        $targetImage = $listing->images()->where('sort', $targetSort)->first();
+
+        if ($targetImage) {
+            // Swap the sort values
+            $image->update(['sort' => $targetSort]);
+            $targetImage->update(['sort' => $currentSort]);
+        }
+
+        return redirect()->back()->with('success', 'Image moved successfully!');
     }
 }
