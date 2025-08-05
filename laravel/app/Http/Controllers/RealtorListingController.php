@@ -86,6 +86,14 @@ class RealtorListingController extends Controller
             ->with('success', 'Listing was updated!');
     }
 
+    public function enable(Request $request, Listing $listing)
+    {
+        Gate::authorize('update', $listing);
+        $listing->update(['enabled' => true]);
+        return redirect()->back()
+            ->with('success', 'Listing was enabled!');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

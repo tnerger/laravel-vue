@@ -23,10 +23,11 @@ class ListingSeeder extends Seeder
     }
 
 
-    function createListingForUser(User $user, Collection $examplePicturesHouses, Collection $examplePicturesRooms): void
+    function createListingForUser(User $user, Collection $examplePicturesHouses, Collection $examplePicturesRooms, Bool $enabled): void
     {
         $listing = Listing::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'enabled' => $enabled,
         ]);
 
         $image = $listing->images()->create([

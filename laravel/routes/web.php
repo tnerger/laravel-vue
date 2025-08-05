@@ -89,6 +89,8 @@ Route::prefix('realtor')
         Route::put('listing/{listing}/restore', [RealtorListingController::class, 'restore'])
             ->withTrashed()
             ->name('listing.restore');
+        Route::put('listing/{listing}/enable', [RealtorListingController::class, 'enable'])
+            ->name('listing.enable');
         Route::name('offer.accept')
             ->put(
                 'offer/{offer}/accept',

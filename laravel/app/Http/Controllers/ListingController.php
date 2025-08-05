@@ -25,7 +25,7 @@ class ListingController extends Controller
             'areaTo',
         ]);
 
-        $query = Listing::mostRecent()->filter($filters);
+        $query = Listing::enabled()->mostRecent()->filter($filters);
 
 
 

@@ -17,6 +17,9 @@
                     <div v-if="listing.sold_at !== null"
                         class="inline-block mb-2 p-1 border border-green-300 dark:border-green-900 border-dashed rounded-md font-bold text-green-500 dark:text-green-900 text-xs uppercase">
                         Sold</div>
+                    <Link :href="route('realtor.listing.enable',{listing})" method="PUT" v-if="!listing.enabled"
+                        class="inline-block mb-2 p-1 border border-red-300 dark:border-red-900 border-dashed rounded-md btn-outline font-bold text-red-500 dark:text-red-900 text-xs uppercase">
+                        inactive</Link>
                     <div>{{ listing.title }}</div>
                     <div class="xl:flex items-center gap-2">
                         <Price :price="listing.price" class="font-medium text-2xl"></Price>

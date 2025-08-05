@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Listing extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['title', 'description', 'beds', 'city', 'baths', 'area', 'code', 'street', 'street_nr', 'price'];
+    protected $fillable = ['title', 'description', 'beds', 'city', 'baths', 'area', 'code', 'street', 'street_nr', 'price', 'enabled'];
     protected $sortable = ['price', 'created_at'];
 
     public function user(): BelongsTo
@@ -56,6 +56,10 @@ class Listing extends Model
         // );
     }
 
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('enabled', true);
+    }
 
     public function scopeFilter(Builder $query, array $filters): Builder
     {

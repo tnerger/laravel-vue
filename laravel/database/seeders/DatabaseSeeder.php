@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
         $listingSeeder = new ListingSeeder();
         for ($i = 0; $i <= 20; $i++) {
             $user = $users->random();
-            $listingSeeder->createListingForUser($user, $examplePicturesHouses, $examplePicturesRooms);
+            $listingSeeder->createListingForUser($user, $examplePicturesHouses, $examplePicturesRooms, true);
         }
         for ($i = 0; $i <= 10; $i++) {
-            $listingSeeder->createListingForUser($admin, $examplePicturesHouses, $examplePicturesRooms);
+            $listingSeeder->createListingForUser($admin, $examplePicturesHouses, $examplePicturesRooms, fake()->boolean(80));
         }
 
         $this->command->line('  Seeding offers');
